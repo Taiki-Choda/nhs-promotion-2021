@@ -115,6 +115,93 @@ function loadFinish () {
     loader.dataset.efLoad = "open";
     setTimeout(scroll_start,900);
 };
+class Modal {
+    constructor(obj) {
+        const baseHtml = `<div class="modal" data-modal-content="">
+                            <div class="close-btn" role="button" tabindex="0" aria-label="モーダルウィンドウを閉じる" data-modal-closer="true">
+                                <span class="close-btn__line"></span>
+                                <span class="close-btn__line"></span>
+                            </div>
+                            <div class="modal__container"></div>
+                            <div class="modal__background" data-modal-closer="true"></div>
+                        </div>`;
+        document.querySelector('body').insertAdjacentHTML('beforeend',baseHtml);
+        this.type = obj.type;
+        this.modal = document.querySelector(obj.modal);
+        this.modalContainer = document.querySelector(obj.modalContainer);
+        this.modalContainer.insertAdjacentHTML('afterbegin',obj.template);
+        const modalOpenButton = document.querySelectorAll(obj.modalOpenButton);
+        const modalCloseButton = document.querySelectorAll(obj.modalCloseButton);
+        modalOpenButton.forEach(button => {
+            if (this.type === "image") {
+                button.addEventListener('click', (e) => this.imageModalOpen(e));
+            } else {
+                button.addEventListener('click', () => this.openModal());
+            }
+        });
+        modalCloseButton.forEach(button => {
+            button.addEventListener('click', () => this.closeModal());
+        });
+    }
+    openModal() {
+        this.modalContainer.scrollTo(0, 0);
+        this.modalContainer.classList.add('modal__container--open');
+        this.modal.classList.add('modal--open');
+    }
+    closeModal() {
+        this.modal.classList.remove('modal--open');
+        this.modalContainer.classList.remove('modal__container--open');
+    }
+    imageModalOpen(e) {
+        this.openModal();
+        this.modal.dataset.modalContent = "image";
+        const image = e.currentTarget;
+        const imageSrc = image.getAttribute('src');
+        const imageTitle = image.getAttribute('alt');
+        this.modalContainer.innerHTML = `<img src="${imageSrc}" alt="imageTitle"><h6>${imageTitle}</h6>`;
+    }
+}
+// フィルター機能
+class Filter {
+    constructor(obj) {
+        this.rule = ""; //  フィルタールール
+        this.hideCardClass = obj.hideCardClass
+        this.activeButtonClass = obj.activeButtonClass
+        this.filterButtons = document.querySelectorAll(obj.filterButtons);
+        this.filterTargets = document.querySelectorAll(obj.filterTargets);
+        this.filterButtons.forEach(button => {
+            button.addEventListener('click', (e) => this.buttonClicked(e));
+        });
+    }
+    // ソートを解除して全てのカードを表示する
+    showAllCards() {
+        this.filterTargets.forEach(target => {
+            target.classList.remove(this.hideCardClass);
+        });
+        this.filterButtons.forEach(button => {
+            button.classList.remove(this.activeButtonClass);
+        });
+    }
+    // ソートボタンが押された時の処理
+    buttonClicked(e) {
+        const button = e.currentTarget;
+        if (button.classList.contains(this.activeButtonClass)) {
+            button.classList.remove(this.activeButtonClass);
+            this.showAllCards();
+        } else {
+            this.showAllCards();
+            button.classList.add(this.activeButtonClass);
+            this.rule = button.dataset.filterName;
+            this.filterTargets.forEach(target => {
+                target.classList.remove(this.hideCardClass);
+                if (target.dataset.cardFilterer !== this.rule) {
+                    // 押されたボタンのルールとカードの種別が異なれば隠す
+                    target.classList.add(this.hideCardClass);
+                }
+            });
+        }
+    };
+}
 window.onload = () => {
     if (loadShow) {
         // ローディング画面が表示されていれば
@@ -270,6 +357,15 @@ window.onload = () => {
             }
         });
     })();
+    const imageModal = new Modal({
+        type: "image",
+        modal: ".modal",
+        modalOpenButton: "[data-open-image=true]",
+        modalCloseButton: "[data-modal-closer=true]",
+        modalContainer: ".modal__container",
+        template: ``,
+        
+    });
     // 部活動一覧
     const tgt = document.querySelector('#filter');
     const modal = document.querySelector('.modal');
@@ -763,201 +859,158 @@ window.onload = () => {
             </div>`;
         });
         targetArea.insertAdjacentHTML('beforeend', listCode);
-        // フィルター機能
-        class Filter {
-            constructor(obj) {
-                this.rule = ""; //  フィルタールール
-                this.hideCardClass = obj.hideCardClass
-                this.activeButtonClass = obj.activeButtonClass
-                this.filterButtons = document.querySelectorAll(obj.filterButtons);
-                this.filterTargets = document.querySelectorAll(obj.filterTargets);
-                this.filterButtons.forEach(button => {
-                    button.addEventListener('click', (e) => this.buttonClicked(e));
-                });
-            }
-            // ソートを解除して全てのカードを表示する
-            showAllCards() {
-                this.filterTargets.forEach(target => {
-                    target.classList.remove(this.hideCardClass);
-                });
-                this.filterButtons.forEach(button => {
-                    button.classList.remove(this.activeButtonClass);
-                });
-            }
-            // ソートボタンが押された時の処理
-            buttonClicked(e) {
-                const button = e.currentTarget;
-                if (button.classList.contains(this.activeButtonClass)) {
-                    button.classList.remove(this.activeButtonClass);
-                    this.showAllCards();
-                } else {
-                    this.showAllCards();
-                    button.classList.add(this.activeButtonClass);
-                    this.rule = button.dataset.filterName;
-                    this.filterTargets.forEach(target => {
-                        target.classList.remove(this.hideCardClass);
-                        if (target.dataset.cardFilterer !== this.rule) {
-                            // 押されたボタンのルールとカードの種別が異なれば隠す
-                            target.classList.add(this.hideCardClass);
-                        }
-                    });
-                }
-            };
-        }
-        // 部活動フィルターの呼び出し
+        const clubModal = new Modal({
+            type: "club",
+            modal: ".modal",
+            modalOpenButton: "[data-modal-btn=true]",
+            modalCloseButton: "[data-modal-closer=true]",
+            modalContainer: ".modal__container",
+            template: `<nav class="modal__header">
+                            <div class="status-line"><span class="status-line__liner"></span></div>
+                            <h4 data-modal-info="name"></h4>
+                            <div class="page__btn page__btn--prev" role="button" tabindex="0" aria-label="次のページへ"></div>
+                            <div class="page__btn page__btn--back" role="button" tabindex="0" aria-label="前のページへ"></div>
+                        </nav>
+                        <div class="club-modal">
+                            <div class="club-modal__image">
+                            </div>
+                            <div class="nhs-block">
+                                <h4 class="art-ttl--feature" data-modal-info="name"></h4>
+                                <p data-modal-info="pr"></p>
+                                <dl class="info-circle">
+                                    <div class="info-circle__item">
+                                        <dt><i class="fas fa-map-marker-alt"></i></dt>
+                                        <dd data-modal-info="place"></dd>
+                                    </div>
+                                    <div class="info-circle__item">
+                                        <dt><i class="fas fa-clock"></i></dt>
+                                        <dd data-modal-info="day"></dd>
+                                    </div>
+                                </dl>
+                            </div>
+                            <section class="nhs-block">
+                                <h5 class="block-ttl--base">メッセージ</h5>
+                                <p data-modal-info="msg"></p>
+                            </section>
+                            <section class="nhs-block">
+                                <h5 class="block-ttl--base">現部員のコメント</h5>
+                                <p data-modal-info="comment"></p>
+                            </section>
+                            <section class="nhs-block modal__award--hide">
+                                <h5 class="block-ttl--base">実績</h5>
+                                <ul data-modal-info="award">
+                                </ul>
+                            </section>
+                        </div>`,
+        });
+        // フィルターの呼び出し
         const filterClicked = new Filter({
             filterButtons: ".filter-btn",  //  フィルターボタンのクラス名
             filterTargets: "[data-card-filterer]",  //  フィルター対象の要素のデータ属性
             hideCardClass: "cards__item--hide",   //  非表示のカードに付与されるClass名
             activeButtonClass: "filter-btn--active",  //  アクティブなボタンに付与されるClass名
         });
-
-        let club_number = 0;
-        let btn_kind = '';
+        let clubNumber = 0;
+        const entirety = club_data.length;
+        const modal = document.querySelector('.modal');
         const container = modal.querySelector('.modal__container');
-        const page_fade_tgt = [modal.querySelector('.club-modal'), modal.querySelector('.modal__header').querySelector('h4')];
+        const fadeEffectTargets = [modal.querySelector('.club-modal'), modal.querySelector('.modal__header h4')];
         const info_tgt = modal.querySelectorAll('[data-modal-info]');
         const statusLiner = modal.querySelector('.status-line__liner');
-        const entirety = club_data.length;
-        function modalLiner(club_number) {
-            const now = Number(club_data[club_number]['no']) + 1;
-            const status = (now / entirety) * 100 + '%';
-            statusLiner.style.width = String(status);
+        const nextButton = modal.querySelector('.page__btn--prev');
+        const prevButton = modal.querySelector('.page__btn--back');
+        const modalOpenTrigger = document.querySelectorAll('[data-modal-btn=true]');
+        // スライダーバー
+        function modalLiner(clubNumber) {
+            const currentClubNumber = Number(clubNumber) + 1;
+            const currentPercent = (currentClubNumber / entirety) * 100;
+            statusLiner.style.width = `${currentPercent}%`;
         }
-        const clubModalContentWrite = ()=> {
-            for (let i = 0; i < page_fade_tgt.length; i++) {
-                const element = page_fade_tgt[i];
+        // ページ切り替えのエフェクト
+        function clubModalPaging(direction) {
+            buttonToggleDisplay();
+            fadeEffectTargets.forEach(element => {
                 element.classList.add('page__fade-item');
                 element.style.opacity = '0';
-                element.style.visibility = 'hidden';
-                if (btn_kind === 'prev') {
+                if (direction === 'next') {
                     element.style.transform = 'translateX(-20px)'
-                } else if (btn_kind === 'back') {
+                } else if(direction === 'prev') {
                     element.style.transform = 'translateX(20px)'
-                };
-            };
-            // ----------------------
-            setTimeout( ()=> {
-                if (club_data[club_number].award.length === 0) {
-                    // 実績データの配列が空なら
-                    document.querySelector('.modal').dataset.awardHide = "true";
-                } else {
-                    // 実績データがあれば
-                    document.querySelector('.modal').dataset.awardHide = "false";
-                };
-                info_tgt.forEach(target => {
-                    // [data-modal-info]で指定されたキー
-                    const contentKey = target.dataset.modalInfo;
-                    // キー名に対応するのデータ
-                    let data = club_data[club_number][contentKey];
-                    if (contentKey === "award") {
-                        // キーが[award]の場合には、リスト形式に展開する
-                        let res = '';
-                        data.forEach(listItem => {
-                            res += `<li>${listItem}</li>`
-                        });
-                        data = res;
-                    }
-                    target.innerHTML = data;
-                });
-                const image_source = `<img src="assets/images/club/${ club_number }/01.jpg">`;
-                const image_tgt = container.querySelector('.club-modal__image');
-                image_tgt.innerHTML = image_source;
-                container.scrollTo(0, 0);
-                for (let i = 0; i < page_fade_tgt.length; i++) {
-                    if (btn_kind === 'prev') {
-                        page_fade_tgt[i].style.transform = 'translateX(20px)'
-                    } else if (btn_kind === 'back') {
-                        page_fade_tgt[i].style.transform = 'translateX(-20px)'
-                    };
-                };
-            }, 200);
-            // ------------------------
-            setTimeout(() => {
-                modalLiner(club_number);
-                for (let i = 0; i < page_fade_tgt.length; i++) {
-                    const e = page_fade_tgt[i];
-                    e.style.opacity = '1';
-                    e.style.visibility = 'unset';
-                    e.style.transform = 'translateX(0)'
-                    if (btn_kind === 'prev') {
-                        e.style.transform = 'translateX(0)'
-                    } else if (btn_kind === 'back') {
-                        e.style.transform = 'translateX(0)'
-                    };
                 }
-            }, 350);
-        };
-        const prevButton = modal.querySelector('.page__btn--prev');
-        const backButton = modal.querySelector('.page__btn--back');
-        const modalBtn = tgt.querySelectorAll('[data-modal-btn=true]');
-        for (let i = 0; i < modalBtn.length; i++) {
-            const element = modalBtn[i];
+                setTimeout(()=> {
+                    contentWrite();
+                    container.scrollTo(0, 0);
+                    if (direction === 'next') {
+                        element.style.transform = 'translateX(20px)'
+                    } else if(direction === 'prev') {
+                        element.style.transform = 'translateX(-20px)'
+                    };
+                }, 200);
+                setTimeout(() => {
+                    modalLiner(clubNumber);
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateX(0)'
+                }, 400);
+            });
+        }
+        function contentWrite() {
+            // 実績データの配列の有無で要素の可視性を切り替え
+            if (club_data[clubNumber].award.length === 0) {
+                document.querySelector('.modal').dataset.awardHide = "true";
+            } else {
+                document.querySelector('.modal').dataset.awardHide = "false";
+            };
+            info_tgt.forEach(target => {
+                // [data-modal-info]で指定されたキー
+                const contentKey = target.dataset.modalInfo;
+                // キー名に対応するのデータ
+                let data = club_data[clubNumber][contentKey];
+                if (contentKey === "award") {
+                    // キーが[award]の場合には、リスト形式に展開する
+                    let res = '';
+                    data.forEach(listItem => {
+                        res += `<li>${listItem}</li>`
+                    });
+                    data = res;
+                }
+                target.innerHTML = data;
+            });
+            const image_source = `<img src="assets/images/club/${clubNumber}/01.jpg">`;
+            const image_tgt = container.querySelector('.club-modal__image');
+            image_tgt.innerHTML = image_source;
+        }
+        // カードを押したときにモーダルを表示する
+        modalOpenTrigger.forEach(element => {
             element.addEventListener('click', () => {
-                btn_kind = 'none';
-                club_number = Number(element.dataset.cardNumber);
-                if (club_number === 0) {
-                    backButton.classList.add('page__btn--hide');
-                } else if (club_number + 1 === club_data.length) {
-                    prevButton.classList.add('page__btn--hide');
-                };
-                clubModalContentWrite();
+                clubNumber = Number(element.dataset.cardNumber);
+                clubModalPaging('none');
             });
+        });
+        function prevPage() {
+            clubNumber -= 1;
+            clubModalPaging('prev');
         }
-        backButton.addEventListener('click', ()=> {
-            btn_kind = 'back';
-            club_number -= 1;
-            clubModalContentWrite();
-            if (club_number === 0) {
-                backButton.classList.add('page__btn--hide');
-            } else if (club_number - 2 < club_data.length) {
+        function nextPage() {
+            clubNumber += 1;
+            clubModalPaging('next');
+        }
+        // 前後のスライド有無に応じて、ボタンの表示を切り替える
+        function buttonToggleDisplay() {
+            if (clubNumber !== entirety - 1) {
+                nextButton.classList.remove('page__btn--hide');
+            } else {
+                nextButton.classList.add('page__btn--hide');
+            }
+            if (clubNumber !== 0) {
                 prevButton.classList.remove('page__btn--hide');
-            };
-        });
-        prevButton.addEventListener('click', ()=> {
-            btn_kind = 'prev';
-            club_number += 1;
-            clubModalContentWrite();
-            if (club_number === 1) {
-                backButton.classList.remove('page__btn--hide');
-            } else if (club_number + 1 === club_data.length) {
+            } else {
                 prevButton.classList.add('page__btn--hide');
-            };
-        });
-        document.querySelector('.close-btn').addEventListener('click', function () {
-            backButton.classList.remove('page__btn--hide');
-            prevButton.classList.remove('page__btn--hide');
-        });
+            }
+        }
+        prevButton.addEventListener('click', prevPage);
+        nextButton.addEventListener('click', nextPage);
     }
-    class Modal {
-        constructor(obj) {
-            this.modalContainer = document.querySelector(obj.modalContainer);
-            const modalOpenButton = document.querySelectorAll(obj.modalOpenButton);
-            const modalCloseButton = document.querySelectorAll(obj.modalCloseButton);
-            modalOpenButton.forEach(button => {
-                button.addEventListener('click', () => this.openModal());
-            });
-            modalCloseButton.forEach(button => {
-                button.addEventListener('click', () => this.closeModal());
-            });
-        }
-        openModal() {
-            this.modalContainer.scrollTo(0, 0);
-            this.modalContainer.classList.add('modal__container--open');
-            modal.classList.add('modal--open');
-        }
-        closeModal() {
-            modal.classList.remove('modal--open');
-            this.modalContainer.classList.remove('modal__container--open');
-        }
-    }
-    const clubModal = new Modal({
-        modalOpenButton: "[data-modal-btn=true]",
-        modalCloseButton: ".close-btn",
-        modalContainer: ".modal__container",
-    });
     cursor();
-    imageOpen();
 };
 // カーソルストーカー
 function cursor() {
@@ -995,53 +1048,5 @@ function cursor() {
             // 総スクロール量を上書きする
             scrolled = window.pageYOffset || document.documentElement.scrollTop;
         });
-    };
-};
-
-const imageOpen = () => {
-    const modalBase = `<div class="modal" data-modal-content="">
-                            <div class="close-btn" role="button" tabindex="0" aria-label="モーダルウィンドウを閉じる" data-modal-closer="true">
-                                <span class="close-btn__line"></span>
-                                <span class="close-btn__line"></span>
-                            </div>
-                            <div class="modal__container"></div>
-                            <div class="modal__background" data-modal-closer="true"></div>
-                        </div>`;
-    if (document.querySelector('.modal') === null) {
-        document.querySelector('.wrap-all').insertAdjacentHTML('beforeend', modalBase);
-    }
-    const modalWrap = document.querySelector('.modal');
-    const modalContainer = modalWrap.querySelector('.modal__container');
-    const modalCloser = modalWrap.querySelectorAll('[data-modal-closer=true]');
-    modalCloser.forEach(element => {
-        element.addEventListener('click', () => {
-            modalWrap.classList.remove('modal--open');
-            scroll_start();
-        });
-    });
-    if (modalWrap.dataset.modalContent === "image") {
-        modalWrap.addEventListener('click', () => {
-            modalWrap.classList.remove('modal--open');
-            scroll_start();
-        });
-    }
-    function modalRewrite(value,element) {
-        modalWrap.dataset.modalContent = value;
-        const imageSrc = element.getAttribute('src');
-        const imageTitle = element.getAttribute('alt');
-        modalContainer.innerHTML = `<img src="${imageSrc}" alt="imageTitle"><h6>${imageTitle}</h6>`;
-        modalWrap.classList.add('modal--open');
-        scroll_stop();
-    }
-    const modalTrigger = ['.article-hero__img','.article-hero__img--high','[data-open-image=true]'];
-    for (let i = 0; i < modalTrigger.length; i++) {
-        const element = modalTrigger[i];
-        let tgt = Array.from(document.querySelectorAll(element));
-        for (let i = 0; i < tgt.length; i++) {
-            const e = tgt[i];
-            e.addEventListener('click', () => {
-                modalRewrite('image',e);
-            })
-        }
     };
 };
