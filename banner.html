@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>埋め込みバナー</title>
+
+    <!-- 学校HP埋め込みバナー用 Styleソース -->
+    <!-- ↓↓↓↓ 埋め込みここから ↓↓↓↓ -->
+    <style>
+        .pr-bnr {
+            position: relative;
+            margin: 3rem 0 3rem 0;
+            padding: 0;
+            width: 100%;
+            max-width: 1200px;
+            text-align: left;
+            box-sizing: border-box;
+        }
+        .pr-bnr__link {
+            color: #fff;
+            -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+        }
+        .pr-bnr__link:focus {
+            outline: none;
+            opacity: 0.8;
+        }
+        .pr-bnr__img {
+            padding: 0;
+            width: 100%;
+            height: auto;
+            vertical-align: top;
+            border: none;
+            opacity: 1;
+        }
+        .pr-bnr__img:hover {
+            opacity: 0.8;
+        }
+        .pr-bnr::after {
+            content: '\f35d';
+            font-family: "Font Awesome 5 Free";
+            color: #0974f0;
+            position: absolute;
+            right: -5px;
+            bottom: -20px;
+            background: #fff;
+            border-radius: 50%;
+            padding: 10px;
+            width: 2em;
+            height: 2em;
+            line-height: 2em;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 900;
+            -webkit-box-shadow: 0 0 13px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 13px rgba(0, 0, 0, 0.3);
+            -webkit-transition: -webkit-transform 0.2s;
+            transition: -webkit-transform 0.2s;
+            transition: transform 0.2s;
+            transition:transform 0.2s, -webkit-transform 0.2s
+        }
+        .pr-bnr:hover::after {
+            -webkit-transform: scale(115%);
+            transform:scale(115%)
+        }
+    </style>
+    <!-- ↑↑↑↑ 埋め込みここまで ↑↑↑↑ -->
+</head>
+<body>
+    <!-- 学校HP埋め込みバナー用 HTMLソース -->
+    <!-- ↓↓↓↓ 埋め込みここから ↓↓↓↓ -->
+    <div class="pr-bnr">
+        <a class="pr-bnr__link" href="https://www.hyogo-c.ed.jp/~nagata-hs/promotion-2021/pr/top.html" target="_blank" rel="noopener noreferrer">
+            <img class="pr-bnr__img" src="promotion-2021/assets/images/bnr_release_01.jpg" alt="中学生向けの学校紹介特設Webサイトへのリンクバナー">
+        </a>
+    </div>
+    <!-- ↑↑↑↑ 埋め込みここまで ↑↑↑↑ -->
+</body>
+</html>

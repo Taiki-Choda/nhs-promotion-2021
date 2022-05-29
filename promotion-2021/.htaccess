@@ -1,0 +1,5 @@
+ErrorDocument 400 https://www.hyogo-c.ed.jp/~nagata-hs/promotion-2021/pr/error.html
+ErrorDocument 401 https://www.hyogo-c.ed.jp/~nagata-hs/promotion-2021/pr/error.html
+ErrorDocument 403 https://www.hyogo-c.ed.jp/~nagata-hs/promotion-2021/pr/error.html
+ErrorDocument 404 https://www.hyogo-c.ed.jp/~nagata-hs/promotion-2021/pr/error.html
+ErrorDocument 500 https://www.hyogo-c.ed.jp/~nagata-hs/promotion-2021/pr/error.html
