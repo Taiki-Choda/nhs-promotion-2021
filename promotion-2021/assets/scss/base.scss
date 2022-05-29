@@ -1097,34 +1097,13 @@ th,td {
     color: rgb(0, 0, 0);
     background-color: rgba(255, 255, 255, 0.9);
     border-top: solid 1px #afafaf;
-    padding: 1rem 0;
+    padding: 0.75rem 0;
     border-radius: 5px;
     h4 {
-      font-size: 1rem;
+      font-size: 0.7rem;
       font-weight: 400;
       margin: 0;
     }
-  }
-  &__inblock {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-  }
-  &__container {
-    @include hideScrollBar;
-    position: absolute;
-    width: 95%;
-    max-width: 780px;
-    height: calc(94% - 3.5rem);
-    top: calc(50% - 2.5rem);
-    left: 50%;
-    transform: translate(-50%,-50%);
-    overflow-y: scroll;
-    background-color: #fff;
-    border-radius: 15px 15px 0 0;
   }
   &__background {
     position: absolute;
@@ -1213,10 +1192,23 @@ th,td {
   }
 }
 .club-modal {
-  width: 90%;
-  margin: 3rem auto 0 auto;
-  padding-bottom: 5rem;
-  font-size: 0.9em;
+    position: absolute;
+    width: 95%;
+    max-width: 780px;
+    height: calc(94% - 3.5rem);
+    top: calc(50% - 27px);
+    left: 50%;
+    transform: translate(-50%,-50%);
+    overflow-y: scroll;
+    background-color: #fff;
+    border-radius: 7px 7px 0 0;
+    @include hideScrollBar;
+    &__inner {
+        width: 90%;
+        margin: 3rem auto 0 auto;
+        padding-bottom: 3rem;
+        font-size: 0.9em;
+    }
   .art-ttl--feature {
     padding-bottom: 1rem;
     margin-bottom: 1rem;
@@ -1236,7 +1228,7 @@ th,td {
 }
 .status-line {
   position: absolute;
-  top: -22px;
+  top: -20px;
   width: 100%;
   height: 6px;
   background-color: #dbdbdb;
