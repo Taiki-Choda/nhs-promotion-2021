@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const addScriptEl = document.createElement('script');
     addScriptEl.src = 'assets/js/swiper.js';
     document.head.appendChild(addScriptEl);
-    //  header, footer, emergency_block　を挿入する
+    //  header, footer, emergency_blockを挿入する
     const writeSet = [
         {
             'target': 'nhs-header',
@@ -125,7 +125,10 @@ class Modal {
                             <div class="modal__container"></div>
                             <div class="modal__background" data-modal-closer="true"></div>
                         </div>`;
-        document.querySelector('body').insertAdjacentHTML('beforeend',baseHtml);
+        const modal = document.querySelector(".modal");
+        if (modal === null) {
+            document.querySelector('body').insertAdjacentHTML('beforeend',baseHtml);
+        }
         this.type = obj.type;
         this.modal = document.querySelector(obj.modal);
         this.modalContainer = document.querySelector(obj.modalContainer);
@@ -169,6 +172,7 @@ class Filter {
         this.activeButtonClass = obj.activeButtonClass
         this.filterButtons = document.querySelectorAll(obj.filterButtons);
         this.filterTargets = document.querySelectorAll(obj.filterTargets);
+        this.filterAttribute = obj.filterTargets.replace("[", "").replace("]", "");
         this.filterButtons.forEach(button => {
             button.addEventListener('click', (e) => this.buttonClicked(e));
         });
@@ -194,7 +198,7 @@ class Filter {
             this.rule = button.dataset.filterName;
             this.filterTargets.forEach(target => {
                 target.classList.remove(this.hideCardClass);
-                if (target.dataset.cardFilterer !== this.rule) {
+                if (target.getAttribute(this.filterAttribute) !== this.rule) {
                     // 押されたボタンのルールとカードの種別が異なれば隠す
                     target.classList.add(this.hideCardClass);
                 }
@@ -212,7 +216,6 @@ window.onload = () => {
             loadFinish();
         };
     }
-
     // 表示領域に入ったらフェードインするアニメーション
     function fadeIn(entries) {
         entries.forEach(entry => {
@@ -221,15 +224,15 @@ window.onload = () => {
                 target.dataset.efShow = "true";
                 setTimeout(() => {
                     target.dataset.efShow = "end";
-                }, 500)
+                }, 500);
             }
         });
     }
     let observer = new IntersectionObserver(fadeIn, {
         threshold: 0.5,
     });
-    const entry_targets = document.querySelectorAll("[data-ef-show]");
-    entry_targets.forEach(element => {
+    const showUpTargets = document.querySelectorAll("[data-ef-show]");
+    showUpTargets.forEach(element => {
         observer.observe(element);
     });
     // ヘッダーのアニメーション
@@ -326,7 +329,7 @@ window.onload = () => {
         let a = new StartSlider(element);
     });
     // トップのパララックスの設定切り替え
-    function togglePara() {
+    (function togglePara() {
         const width = window.innerWidth;
         const toggleTarget = document.querySelector('.feature');
         if (toggleTarget !== null) {
@@ -337,8 +340,7 @@ window.onload = () => {
                 toggleTarget.style.transform = 'unset';
             }
         }
-    }
-    togglePara();
+    })();
     window.addEventListener('resize', ()=> {
         togglePara();
     });
@@ -364,14 +366,12 @@ window.onload = () => {
         modalCloseButton: "[data-modal-closer=true]",
         modalContainer: ".modal__container",
         template: ``,
-        
     });
-    // 部活動一覧
-    const tgt = document.querySelector('#filter');
-    const modal = document.querySelector('.modal');
-    if (tgt !== null) {
-        const targetArea = tgt.querySelector('.cards');
-        const club_data = [
+    // 部活動一覧のカード表示
+    const clubCardArea = document.querySelector('#filter');
+    if (clubCardArea !== null) {
+        const targetArea = clubCardArea.querySelector('.cards');
+        const clubData = [
             {
                 'no': '0',
                 'name': '美術部',
@@ -838,14 +838,14 @@ window.onload = () => {
             }
         ];
         let listCode = '';
-        club_data.forEach(element => {
+        clubData.forEach(element => {
             // 説明文をカード用に20文字で区切る
-            const desc = element['msg'].slice(0, 20) + '...';
+            const desc = element.msg.slice(0, 20) + '...';
             listCode += 
             `<div 
                 class="cards__item"
                 data-modal-btn="true"
-                data-card-filterer="${element.kind}"
+                data-filter-type="${element.kind}"
                 data-card-number="${element.no}"
                 role="button"
                 tabindex="0"
@@ -908,12 +908,12 @@ window.onload = () => {
         // フィルターの呼び出し
         const filterClicked = new Filter({
             filterButtons: ".filter-btn",  //  フィルターボタンのクラス名
-            filterTargets: "[data-card-filterer]",  //  フィルター対象の要素のデータ属性
+            filterTargets: "[data-filter-type]",  //  フィルター対象の要素のデータ属性
             hideCardClass: "cards__item--hide",   //  非表示のカードに付与されるClass名
             activeButtonClass: "filter-btn--active",  //  アクティブなボタンに付与されるClass名
         });
         let clubNumber = 0;
-        const entirety = club_data.length;
+        const entirety = clubData.length;
         const modal = document.querySelector('.modal');
         const container = modal.querySelector('.club-modal');
         const fadeEffectTargets = [modal.querySelector('.club-modal__inner'), modal.querySelector('.modal__header h4')];
@@ -957,7 +957,7 @@ window.onload = () => {
         }
         function contentWrite() {
             // 実績データの配列の有無で要素の可視性を切り替え
-            if (club_data[clubNumber].award.length === 0) {
+            if (clubData[clubNumber].award.length === 0) {
                 document.querySelector('.modal').dataset.awardHide = "true";
             } else {
                 document.querySelector('.modal').dataset.awardHide = "false";
@@ -966,7 +966,7 @@ window.onload = () => {
                 // [data-modal-info]で指定されたキー
                 const contentKey = target.dataset.modalInfo;
                 // キー名に対応するのデータ
-                let data = club_data[clubNumber][contentKey];
+                let data = clubData[clubNumber][contentKey];
                 if (contentKey === "award") {
                     // キーが[award]の場合には、リスト形式に展開する
                     let res = '';
@@ -1027,13 +1027,16 @@ function cursor() {
         let mouseX = 0;
         let mouseY = 0;
         let scrolled = 0;
+        const updatePosition = () => {
+            cursor.style.left = `${mouseX - (stokerWidth / 2)}px`;
+            cursor.style.top = `${mouseY - (stokerWidth / 2)}px`;
+        }
         document.body.addEventListener('mousemove', (e) => {
             // スクロール時に設定したトランジションを解除
             cursor.style.transition = "";
             mouseX = e.pageX;
             mouseY = e.pageY;
-            cursor.style.left = `${mouseX - (stokerWidth / 2)}px`;
-            cursor.style.top = `${mouseY - (stokerWidth / 2)}px`;
+            updatePosition();
             hoverTargets.forEach(target => {
                 target.addEventListener('mouseover', () => {cursor.style.transform = 'scale(2)'});
                 target.addEventListener('mouseleave', () => {cursor.style.transform = ""}); 
@@ -1045,8 +1048,7 @@ function cursor() {
             // 今回の追加スクロール量を取得し、マウスの位置を修正する
             const increaseScrollAmount = (window.pageYOffset || document.documentElement.scrollTop) - scrolled;
             mouseY += increaseScrollAmount;
-            cursor.style.left = `${mouseX - (stokerWidth / 2)}px`;
-            cursor.style.top = `${mouseY - (stokerWidth / 2)}px`;
+            updatePosition();
             // 総スクロール量を上書きする
             scrolled = window.pageYOffset || document.documentElement.scrollTop;
         });

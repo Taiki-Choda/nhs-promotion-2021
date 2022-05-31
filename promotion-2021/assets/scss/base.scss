@@ -1014,11 +1014,11 @@ th,td {
   justify-content: space-around;
   gap: 2rem 0.75rem;
   &__item {
-    min-width: 170px;
     width: calc(25% - 0.75rem);
     border: solid 1px #e6e6e6;
     border-radius: 8px;
     box-sizing: content-box;
+    overflow: hidden;
     transition: background-color ease 0.15s 0s;
     &:hover {
       background-color: #f8f8f8;
@@ -1030,30 +1030,21 @@ th,td {
   }
   &__img {
     width: 100%;
+    height: 10rem;
     object-fit: cover;
-    border-radius: 8px 8px 0 0;
     vertical-align: bottom;
   }
   &-cont {
     position: relative;
-    padding-bottom: 2rem;
+    padding: 1.75rem;
     &__ttl {
       display: inline-block;
-      background-color: var(--texts);
-      color: #ffffff;
-      font-weight: 400;
-      font-size: 0.93em;
-      letter-spacing: 0.08em;
-      margin: -1em 0 1em -5px;
-      padding: 5px 35px 5px 10px;
-      max-width: calc(100% + 5px);
-      white-space: nowrap;
+      margin-bottom: 0.25rem;
     }
     &__description {
       font-size: 0.8em;
       color: rgb(104, 104, 104);
-      width: 80%;
-      margin: 0 auto 0.5rem auto;
+      margin: 0;
     }
   }
 }
@@ -1166,25 +1157,26 @@ th,td {
       background-color: #fff;
     }
     .modal__container {
-      width: 100%;
-      height: unset;
-      max-height: 100vh;
-      background: none;
-      border-radius: 0;
-      text-align: center;
-      top: 50%;
+        position: absolute;
+        background: none;
+        border-radius: 0;
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 750px;
       img {
         display: block;
         width: 100%;
-        max-height: calc(100vh - 6rem);
-        max-width: 900px;
+        max-height: calc(100vh - 20rem);
         object-fit: contain;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
         background-color: #fff;
       }
       h6 {
         color: #fff;
-        font-size: 1.15rem;
+        font-size: 1rem;
         font-weight: 400;
         margin: 0;
       }
@@ -1196,7 +1188,7 @@ th,td {
     width: 95%;
     max-width: 780px;
     height: calc(94% - 3.5rem);
-    top: calc(50% - 27px);
+    top: calc(50% - 24px);
     left: 50%;
     transform: translate(-50%,-50%);
     overflow-y: scroll;
