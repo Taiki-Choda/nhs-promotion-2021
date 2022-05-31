@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const addScriptEl = document.createElement('script');
     addScriptEl.src = 'assets/js/swiper.js';
     document.head.appendChild(addScriptEl);
-    //  header, footer, emergency_block　を挿入する
+    //  header, footer, emergency_blockを挿入する
     const writeSet = [
         {
             'target': 'nhs-header',
@@ -125,7 +125,10 @@ class Modal {
                             <div class="modal__container"></div>
                             <div class="modal__background" data-modal-closer="true"></div>
                         </div>`;
-        document.querySelector('body').insertAdjacentHTML('beforeend',baseHtml);
+        const modal = document.querySelector(".modal");
+        if (modal === null) {
+            document.querySelector('body').insertAdjacentHTML('beforeend',baseHtml);
+        }
         this.type = obj.type;
         this.modal = document.querySelector(obj.modal);
         this.modalContainer = document.querySelector(obj.modalContainer);
@@ -212,7 +215,6 @@ window.onload = () => {
             loadFinish();
         };
     }
-
     // 表示領域に入ったらフェードインするアニメーション
     function fadeIn(entries) {
         entries.forEach(entry => {
@@ -364,7 +366,6 @@ window.onload = () => {
         modalCloseButton: "[data-modal-closer=true]",
         modalContainer: ".modal__container",
         template: ``,
-        
     });
     // 部活動一覧
     const tgt = document.querySelector('#filter');
@@ -1027,13 +1028,16 @@ function cursor() {
         let mouseX = 0;
         let mouseY = 0;
         let scrolled = 0;
+        const updatePosition = () => {
+            cursor.style.left = `${mouseX - (stokerWidth / 2)}px`;
+            cursor.style.top = `${mouseY - (stokerWidth / 2)}px`;
+        }
         document.body.addEventListener('mousemove', (e) => {
             // スクロール時に設定したトランジションを解除
             cursor.style.transition = "";
             mouseX = e.pageX;
             mouseY = e.pageY;
-            cursor.style.left = `${mouseX - (stokerWidth / 2)}px`;
-            cursor.style.top = `${mouseY - (stokerWidth / 2)}px`;
+            updatePosition();
             hoverTargets.forEach(target => {
                 target.addEventListener('mouseover', () => {cursor.style.transform = 'scale(2)'});
                 target.addEventListener('mouseleave', () => {cursor.style.transform = ""}); 
@@ -1045,8 +1049,7 @@ function cursor() {
             // 今回の追加スクロール量を取得し、マウスの位置を修正する
             const increaseScrollAmount = (window.pageYOffset || document.documentElement.scrollTop) - scrolled;
             mouseY += increaseScrollAmount;
-            cursor.style.left = `${mouseX - (stokerWidth / 2)}px`;
-            cursor.style.top = `${mouseY - (stokerWidth / 2)}px`;
+            updatePosition();
             // 総スクロール量を上書きする
             scrolled = window.pageYOffset || document.documentElement.scrollTop;
         });
