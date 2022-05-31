@@ -1166,25 +1166,26 @@ th,td {
       background-color: #fff;
     }
     .modal__container {
-      width: 100%;
-      height: unset;
-      max-height: 100vh;
-      background: none;
-      border-radius: 0;
-      text-align: center;
-      top: 50%;
+        position: absolute;
+        background: none;
+        border-radius: 0;
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 750px;
       img {
         display: block;
         width: 100%;
-        max-height: calc(100vh - 6rem);
-        max-width: 900px;
+        max-height: calc(100vh - 20rem);
         object-fit: contain;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
         background-color: #fff;
       }
       h6 {
         color: #fff;
-        font-size: 1.15rem;
+        font-size: 1rem;
         font-weight: 400;
         margin: 0;
       }
