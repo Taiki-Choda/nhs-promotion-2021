@@ -329,7 +329,7 @@ window.onload = () => {
         let a = new StartSlider(element);
     });
     // トップのパララックスの設定切り替え
-    ( function togglePara() {
+    function togglePara() {
         const width = window.innerWidth;
         const toggleTarget = document.querySelector('.feature');
         if (toggleTarget !== null) {
@@ -340,7 +340,8 @@ window.onload = () => {
                 toggleTarget.style.transform = 'unset';
             }
         }
-    } )();
+    }
+    togglePara();
     window.addEventListener('resize', ()=> {
         togglePara();
     });
@@ -916,7 +917,7 @@ window.onload = () => {
         const entirety = clubData.length;
         const modal = document.querySelector('.modal');
         const container = modal.querySelector('.club-modal');
-        const fadeEffectTargets = [modal.querySelector('.club-modal__inner'), modal.querySelector('.modal__header h4')];
+        const fadeEffectTargets = modal.querySelectorAll('.club-modal__inner, .modal__header h4');
         const info_tgt = modal.querySelectorAll('[data-modal-info]');
         const statusLiner = modal.querySelector('.status-line__liner');
         const nextButton = modal.querySelector('.page__btn--prev');
@@ -928,7 +929,7 @@ window.onload = () => {
             const currentPercent = (currentClubNumber / entirety) * 100;
             statusLiner.style.width = `${currentPercent}%`;
         }
-        // ページ切り替えのエフェクト
+        // モーダルの部活動のページ切り替え処理
         function clubModalPaging(direction) {
             buttonToggleDisplay();
             fadeEffectTargets.forEach(element => {
