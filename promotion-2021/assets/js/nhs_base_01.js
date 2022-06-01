@@ -329,7 +329,7 @@ window.onload = () => {
         let a = new StartSlider(element);
     });
     // トップのパララックスの設定切り替え
-    (function togglePara() {
+    ( function togglePara() {
         const width = window.innerWidth;
         const toggleTarget = document.querySelector('.feature');
         if (toggleTarget !== null) {
@@ -340,7 +340,7 @@ window.onload = () => {
                 toggleTarget.style.transform = 'unset';
             }
         }
-    })();
+    } )();
     window.addEventListener('resize', ()=> {
         togglePara();
     });
@@ -985,7 +985,9 @@ window.onload = () => {
         modalOpenTrigger.forEach(element => {
             element.addEventListener('click', () => {
                 clubNumber = Number(element.dataset.cardNumber);
-                clubModalPaging('none');
+                modalLiner(clubNumber);
+                buttonToggleDisplay();
+                contentWrite();
             });
         });
         function prevPage() {
