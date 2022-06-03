@@ -97,11 +97,11 @@ th,td {
   font-weight: 900;
 }
 @mixin hideScrollBar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-      display:none;
-  }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display:none;
+    }
 }
 @mixin mobile {
     @media screen and (max-width:724px){
@@ -360,14 +360,14 @@ th,td {
 	text-decoration: none;
 	&::after {
 		content: '\f105';
-		font-family: "Font Awesome 5 Free";
 		padding-left: 0.3em;
+        @include iconFont;
 	}
 	&--out {
 		&::before {
 			content: '\f0c1';
-			font-family: "Font Awesome 5 Free";
 			padding-right: 0.3em;
+            @include iconFont;
 		}
 	}
 }
