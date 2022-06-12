@@ -43,11 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
                                     <img class="nhs-header__logo-img" src="assets/images/favicon/nhs_favicon_middle.png" alt="長田高校の校章"><img class="nhs-header__logo-ttl" src="assets/images/header_ttl_01.svg" alt="Nagata High School">
                                     <a class="wrap-link" href="pr/top.html" target="_self" draggable="false">トップページへ</a>
                                 </div>
-                                <div class="nhs-header-btn" role="button" tabindex="0" aria-label="メニューを閉じる">
+                                <button class="nhs-header-btn" role="button" tabindex="0" aria-label="メニューを閉じる">
                                     <span class="nhs-header-btn__line"></span>
                                     <span class="nhs-header-btn__line"></span>
                                     <span class="nhs-header-btn__line"></span>
-                                </div>
+                                </button>
                             </div>
                         </header>
                         <nav class="header-nav">
@@ -118,10 +118,10 @@ function loadFinish () {
 class Modal {
     constructor(obj) {
         const baseHtml = `<div class="modal" data-modal-content="">
-                            <div class="close-btn" role="button" tabindex="0" aria-label="モーダルウィンドウを閉じる" data-modal-closer="true">
+                            <button class="close-btn" role="button" tabindex="0" aria-label="モーダルウィンドウを閉じる" data-modal-closer="true">
                                 <span class="close-btn__line"></span>
                                 <span class="close-btn__line"></span>
-                            </div>
+                            </button>
                             <div class="modal__container"></div>
                             <div class="modal__background" data-modal-closer="true"></div>
                         </div>`;
@@ -869,8 +869,8 @@ window.onload = () => {
             template: `<nav class="modal__header">
                             <div class="status-line"><span class="status-line__liner"></span></div>
                             <h4 data-modal-info="name"></h4>
-                            <div class="page__btn page__btn--prev" role="button" tabindex="0" aria-label="次のページへ"></div>
-                            <div class="page__btn page__btn--back" role="button" tabindex="0" aria-label="前のページへ"></div>
+                            <button class="page__btn page__btn--prev" role="button" tabindex="0" aria-label="次のページへ"></button>
+                            <button class="page__btn page__btn--back" role="button" tabindex="0" aria-label="前のページへ"></button>
                         </nav>
                         <div class="club-modal">
                             <article class="club-modal__inner">
