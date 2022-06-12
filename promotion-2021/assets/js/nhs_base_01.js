@@ -39,10 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
             'target': 'nhs-header',
             'source': `<header class="nhs-header">
                             <div class="nhs-header__content">
-                                <div class="nhs-header__logo" role="banner">
+                                <a class="nhs-header__logo" href="pr/top.html" target="_self" draggable="false">
                                     <img class="nhs-header__logo-img" src="assets/images/favicon/nhs_favicon_middle.png" alt="長田高校の校章"><img class="nhs-header__logo-ttl" src="assets/images/header_ttl_01.svg" alt="Nagata High School">
-                                    <a class="wrap-link" href="pr/top.html" target="_self" draggable="false">トップページへ</a>
-                                </div>
+                                </a>
                                 <button class="nhs-header-btn" role="button" tabindex="0" aria-label="メニューを閉じる">
                                     <span class="nhs-header-btn__line"></span>
                                     <span class="nhs-header-btn__line"></span>
