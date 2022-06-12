@@ -1,3 +1,94 @@
 {
-    "todo-tree.tree.showBadges": true
+    "editor.accessibilityPageSize": 1,
+    "files.autoSave": "afterDelay",
+    "editor.fontSize": 14,
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.wordWrap": "on",
+    "workbench.iconTheme": "material-icon-theme",
+    "explorer.confirmDragAndDrop": false,
+    "workbench.preferredDarkColorTheme": "Atomize",
+    "workbench.fontAliasing": "antialiased",
+    "editor.formatOnType": true,
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "liveServer.settings.donotShowInfoMsg": true,
+    "git.suggestSmartCommit": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "git.checkoutType": [],
+    "git.decorations.enabled": false,
+    "git.countBadge": "tracked",
+    "cSpell.userWords": [
+        "-webkit-background-clip",
+        "-webkit-appearance",
+        "allowfullscreen",
+        "axios",
+        "compnent",
+        "firebaseapp",
+        "firestore",
+        "gapi",
+        "innodb",
+        "msapplication",
+        "nagata",
+        "ngtfes",
+        "noindex",
+        "nuxt",
+        "nuxtjs",
+        "ohs",
+        "playsinline",
+        "precomposed",
+        "progressbar",
+        "seitokai",
+        "swiper",
+        "tabindex",
+        "VARCHAR",
+    ],
+    "liveSassCompile.settings.formats": [
+        {
+            "format": "compressed",
+            "extensionName": ".css",
+            "savePath": "~/../css"
+        }
+    ],
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "editor.inlayHints.fontFamily": "Osaka-Mono,Menlo, Monaco, 'Courier New', monospace",
+    "workbench.editor.pinnedTabSizing": "shrink",
+    "workbench.editor.tabSizing": "shrink",
+    "bracket-pair-colorizer-2.colors": [
+        "Gold",
+        "Orchid",
+        "LightSkyBlue"
+    ],
+    "color-highlight.markRuler": false,
+    "color-highlight.matchWords": true,
+    "liveSassCompile.settings.showOutputWindow": false,
+    "liveServer.settings.CustomBrowser": "chrome",
+    "workbench.colorCustomizations": {
+        "terminal.foreground": "#6bd5ff"
+    },
+    "emmet.includeLanguages": {
+        "vue": "html"
+    },
+    "editor.minimap.scale": 3,
+    "editor.minimap.enabled": false,
+    "editor.fontFamily": "Menlo, NotoSansJP-Regular,'Courier New', monospace",
+    "workbench.colorTheme": "Eva Dark",
+    "liveServer.settings.host": "localhost",
+    "editor.detectIndentation": false,
+    "html.hover.references": false,
+    "scss.hover.references": false,
+    "html.format.wrapLineLength": 0,
+    "css.format.wrapLineLength": 0,
+    "scss.format.wrapLineLength": 0,
+    "vscode-office.openOutline": false,
+    "bracket-pair-colorizer-2.depreciation-notice": false,
+    "liveSassCompile.settings.autoprefix": [
+    
+    ],
+    "liveServer.settings.AdvanceCustomBrowserCmdLine": "",
+    "files.encoding": "utf8bom",
 }
