@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             </nav>
                             <aside class="nhs-footer__cpr" role="complementary" aria-label="コピーライト">
                                 <p>学校紹介特設サイト｜生徒会執行部</p>
-                                <p>©︎2022 Nagata High School Student Council All rights reserved.</p>
+                                <p>©︎${new Date().getFullYear()} Nagata High School Student Council All rights reserved.</p>
                             </aside>
                         </footer>`
         },
