@@ -960,15 +960,15 @@ label {
 .ring-btn {
     display: inline-block;
     position: relative;
-    border-radius: 30px;
+    border-radius: 40px;
     background-color: var(--theme);
     color: #fff;
     text-decoration: none;
     width: 100%;
     max-width: 300px;
-    padding: 10px 0;
+    padding: 15px 30px 15px 20px;
     cursor: pointer;
-    white-space: nowrap;
+    line-height: 1.2em;
     &::after {
         content: '';
         position: absolute;
