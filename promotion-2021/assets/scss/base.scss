@@ -3,7 +3,7 @@ body {
     font-family: var(--fontFamily);
     line-height: 1.618;
     letter-spacing: 0.03em;
-    font-size: 14.5px;
+    font-size: 16px;
     background-color: #fff;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -618,7 +618,7 @@ label {
         position: relative;
     }
 }
-.nhs-header-btn {
+.nhs-header-button {
     display: block;
     position: relative;
     width: 50px;
@@ -754,7 +754,7 @@ label {
     .nhs-header__logo {
         opacity: 0;
     }
-    .nhs-header-btn {
+    .nhs-header-button {
         transform: translateY(30px);
         transition: transform 0.4s ease-in-out 0.4s;
         &__line {
@@ -899,7 +899,7 @@ label {
     opacity: 0.4;
     pointer-events: none;
 }
-.box-btn {
+.box-button {
     display: inline-block;
     position: relative;
     text-decoration: none;
@@ -957,18 +957,18 @@ label {
         }
     }
 }
-.ring-btn {
+.ring-button {
     display: inline-block;
     position: relative;
-    border-radius: 30px;
+    border-radius: 40px;
     background-color: var(--theme);
     color: #fff;
     text-decoration: none;
     width: 100%;
     max-width: 300px;
-    padding: 10px 0;
+    padding: 15px 30px 15px 20px;
     cursor: pointer;
-    white-space: nowrap;
+    line-height: 1.2em;
     &::after {
         content: '';
         position: absolute;
@@ -1015,13 +1015,13 @@ label {
     }
 }
 .filter {
-    &-btn-area {
+    &-button-area {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
         padding-bottom: 2.5rem;
     }
-    &-btn {
+    &-button {
         color: var(--texts);
         background: none;
         padding: 3px 20px;
@@ -1061,11 +1061,10 @@ label {
         vertical-align: bottom;
     }
     &-cont {
-        position: relative;
         padding: 1.75rem;
         &__ttl {
-            display: inline-block;
             margin-bottom: 0.25rem;
+            line-height: 1.2em;
         }
         &__description {
             font-size: 0.8em;
@@ -1074,7 +1073,7 @@ label {
         }
     }
 }
-.heart-btn {
+.heart-button {
     position: absolute;
     right: 1.25rem;
     bottom: 1rem;
@@ -1134,7 +1133,7 @@ label {
         visibility: visible;
         opacity: 1;
     }
-    .close-btn {
+    .close-button {
         position: absolute;
         width: 2.8rem;
         height: 2.8rem;
@@ -1163,23 +1162,23 @@ label {
         }
         &:hover {
             background-color: var(--theme);
-            .close-btn__line {
+            .close-button__line {
                 background-color: #fff;
             }
         }
     }
     //---------------
     &[data-modal-content=image] {
-        .close-btn {
+        .close-button {
             border-color: #fff;
             &:hover {
                 background-color: #ffffff;
-                .close-btn__line {
+                .close-button__line {
                         background-color: rgb(72, 72, 72);
                 }
             }
         }
-        .close-btn__line {
+        .close-button__line {
             background-color: #fff;
         }
         .modal__container {
@@ -1291,7 +1290,7 @@ label {
         opacity: 1;
         transition: 0.2s;
     }
-    &__btn {
+    &__button {
         opacity: 1;
         transition: opacity 0.2s ease 0s;
         &--hide {
@@ -1543,7 +1542,7 @@ label {
     }
 }
 .nhs-slider {
-    @mixin slider-btn {
+    @mixin slider-button {
         background-color: #fff;
         border: solid 3px var(--theme);
         width: 40px;
@@ -1564,7 +1563,7 @@ label {
         }
     }
     &__prev {
-        @include slider-btn;
+        @include slider-button;
         left: 20px;
         &::after {
             content: "\f104";
@@ -1572,7 +1571,7 @@ label {
 
     }
     &__next {
-        @include slider-btn;
+        @include slider-button;
         right: 20px;
         &::after {
             content: "\f054";
@@ -1604,7 +1603,7 @@ label {
 		padding: 13px 0;
 		height: unset;
 	}
-	.swiper-slide-active .btn-feature-element{
+	.swiper-slide-active .button-feature-element{
 		transform: scale(1);
         &__cont {
             transform: translateY(0);
@@ -1660,7 +1659,7 @@ label {
             object-fit: cover;
     }
 }
-.btn-feature-element {
+.button-feature-element {
 	position: relative;
 	box-shadow: var(--nhs-shadow);
 	border-radius: 10px;
