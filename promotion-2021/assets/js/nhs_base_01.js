@@ -42,10 +42,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <a class="nhs-header__logo" href="pr/top.html" target="_self" draggable="false">
                                     <img class="nhs-header__logo-img" src="assets/images/favicon/nhs_favicon_middle.png" alt="長田高校の校章"><img class="nhs-header__logo-ttl" src="assets/images/header_ttl_01.svg" alt="Nagata High School">
                                 </a>
-                                <button class="nhs-header-btn" role="button" tabindex="0" aria-label="メニューを閉じる">
-                                    <span class="nhs-header-btn__line"></span>
-                                    <span class="nhs-header-btn__line"></span>
-                                    <span class="nhs-header-btn__line"></span>
+                                <button class="nhs-header-button" role="button" tabindex="0" aria-label="メニューを閉じる">
+                                    <span class="nhs-header-button__line"></span>
+                                    <span class="nhs-header-button__line"></span>
+                                    <span class="nhs-header-button__line"></span>
                                 </button>
                             </div>
                         </header>
@@ -117,9 +117,9 @@ function loadFinish () {
 class Modal {
     constructor(obj) {
         const baseHtml = `<div class="modal" data-modal-content="">
-                            <button class="close-btn" role="button" tabindex="0" aria-label="モーダルウィンドウを閉じる" data-modal-closer="true">
-                                <span class="close-btn__line"></span>
-                                <span class="close-btn__line"></span>
+                            <button class="close-button" role="button" tabindex="0" aria-label="モーダルウィンドウを閉じる" data-modal-closer="true">
+                                <span class="close-button__line"></span>
+                                <span class="close-button__line"></span>
                             </button>
                             <div class="modal__container"></div>
                             <div class="modal__background" data-modal-closer="true"></div>
@@ -238,7 +238,7 @@ window.onload = () => {
     const headerWrap = document.getElementById('nhs-header');
     if (headerWrap !== null) {
         const header = headerWrap.querySelector('.nhs-header');
-        const header_btn = headerWrap.querySelector('.nhs-header-btn');
+        const header_button = headerWrap.querySelector('.nhs-header-button');
         const header_nav = headerWrap.querySelector('.header-nav');
         let prev_position = 0;
         let scrollingAmount = 0;
@@ -260,7 +260,7 @@ window.onload = () => {
         // ヘッダーの開閉
         // 開閉中に時間計測する変数（重複クリックに対応）
         let headerNavToggle;
-        header_btn.addEventListener('click', headerOpenClose);
+        header_button.addEventListener('click', headerOpenClose);
         function headerOpenClose() {
             if (headerWrap.dataset.headerNav === "open") {
                 header_nav.style.visibility = 'visible';
@@ -844,7 +844,7 @@ window.onload = () => {
             listCode += 
             `<div 
                 class="cards__item"
-                data-modal-btn="true"
+                data-modal-button="true"
                 data-filter-type="${element.kind}"
                 data-card-number="${element.no}"
                 role="button"
@@ -862,14 +862,14 @@ window.onload = () => {
         const clubModal = new Modal({
             type: "club",
             modal: ".modal",
-            modalOpenButton: "[data-modal-btn=true]",
+            modalOpenButton: "[data-modal-button=true]",
             modalCloseButton: "[data-modal-closer=true]",
             modalContainer: ".modal__container",
             template: `<nav class="modal__header">
                             <div class="status-line"><span class="status-line__liner"></span></div>
                             <h4 data-modal-info="name"></h4>
-                            <button class="page__btn page__btn--prev" role="button" tabindex="0" aria-label="次のページへ"></button>
-                            <button class="page__btn page__btn--back" role="button" tabindex="0" aria-label="前のページへ"></button>
+                            <button class="page__button page__button--prev" role="button" tabindex="0" aria-label="次のページへ"></button>
+                            <button class="page__button page__button--back" role="button" tabindex="0" aria-label="前のページへ"></button>
                         </nav>
                         <div class="club-modal">
                             <article class="club-modal__inner">
@@ -907,10 +907,10 @@ window.onload = () => {
         });
         // フィルターの呼び出し
         const filterClicked = new Filter({
-            filterButtons: ".filter-btn",  //  フィルターボタンのクラス名
+            filterButtons: ".filter-button",  //  フィルターボタンのクラス名
             filterTargets: "[data-filter-type]",  //  フィルター対象の要素のデータ属性
             hideCardClass: "cards__item--hide",   //  非表示のカードに付与されるClass名
-            activeButtonClass: "filter-btn--active",  //  アクティブなボタンに付与されるClass名
+            activeButtonClass: "filter-button--active",  //  アクティブなボタンに付与されるClass名
         });
         let clubNumber = 0;
         const entirety = clubData.length;
@@ -919,9 +919,9 @@ window.onload = () => {
         const fadeEffectTargets = modal.querySelectorAll('.club-modal__inner, .modal__header h4');
         const info_tgt = modal.querySelectorAll('[data-modal-info]');
         const statusLiner = modal.querySelector('.status-line__liner');
-        const nextButton = modal.querySelector('.page__btn--prev');
-        const prevButton = modal.querySelector('.page__btn--back');
-        const modalOpenTrigger = document.querySelectorAll('[data-modal-btn=true]');
+        const nextButton = modal.querySelector('.page__button--prev');
+        const prevButton = modal.querySelector('.page__button--back');
+        const modalOpenTrigger = document.querySelectorAll('[data-modal-button=true]');
         // スライダーバー
         function modalLiner(clubNumber) {
             const currentClubNumber = Number(clubNumber) + 1;
@@ -1001,14 +1001,14 @@ window.onload = () => {
         // 前後のスライド有無に応じて、ボタンの表示を切り替える
         function buttonToggleDisplay() {
             if (clubNumber !== entirety - 1) {
-                nextButton.classList.remove('page__btn--hide');
+                nextButton.classList.remove('page__button--hide');
             } else {
-                nextButton.classList.add('page__btn--hide');
+                nextButton.classList.add('page__button--hide');
             }
             if (clubNumber !== 0) {
-                prevButton.classList.remove('page__btn--hide');
+                prevButton.classList.remove('page__button--hide');
             } else {
-                prevButton.classList.add('page__btn--hide');
+                prevButton.classList.add('page__button--hide');
             }
         }
         prevButton.addEventListener('click', prevPage);
