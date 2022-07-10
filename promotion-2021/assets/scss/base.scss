@@ -1061,12 +1061,10 @@ label {
         vertical-align: bottom;
     }
     &-cont {
-        position: relative;
         padding: 1.75rem;
         &__ttl {
-            display: inline-block;
             margin-bottom: 0.25rem;
-            
+            line-height: 1.2em;
         }
         &__description {
             font-size: 0.8em;
